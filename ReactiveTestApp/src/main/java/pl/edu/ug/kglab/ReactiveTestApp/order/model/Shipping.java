@@ -1,7 +1,7 @@
-package pl.edu.ug.kglab.ReactiveTestApp.model.order;
+package pl.edu.ug.kglab.ReactiveTestApp.order.model;
 
 import lombok.Data;
-import pl.edu.ug.kglab.ReactiveTestApp.model.user.Address;
+import pl.edu.ug.kglab.ReactiveTestApp.user.model.Address;
 
 @Data
 public class Shipping {

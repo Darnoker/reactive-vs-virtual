@@ -1,11 +1,10 @@
-package pl.edu.ug.kglab.ReactiveTestApp.service;
+package pl.edu.ug.kglab.ReactiveTestApp.order;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import pl.edu.ug.kglab.ReactiveTestApp.model.order.Order;
-import pl.edu.ug.kglab.ReactiveTestApp.model.product.Product;
-import pl.edu.ug.kglab.ReactiveTestApp.repository.OrderRepository;
-import pl.edu.ug.kglab.ReactiveTestApp.repository.ProductRepository;
+import pl.edu.ug.kglab.ReactiveTestApp.order.model.Order;
+import pl.edu.ug.kglab.ReactiveTestApp.product.model.Product;
+import pl.edu.ug.kglab.ReactiveTestApp.product.ProductRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -27,7 +26,6 @@ public class OrderService {
     public Mono<List<Product>> getListOfProductsForOrder(String orderId) {
         return orderRepository.findById(orderId)
                 .flatMap(this::mapToProductsList);
-
     }
 
     private Mono<List<Product>> mapToProductsList(Order order) {

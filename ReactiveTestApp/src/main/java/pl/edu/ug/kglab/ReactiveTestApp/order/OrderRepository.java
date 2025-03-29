@@ -1,7 +1,7 @@
-package pl.edu.ug.kglab.ReactiveTestApp.repository;
+package pl.edu.ug.kglab.ReactiveTestApp.order;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
-import pl.edu.ug.kglab.ReactiveTestApp.model.order.Order;
+import pl.edu.ug.kglab.ReactiveTestApp.order.model.Order;
 
 public interface OrderRepository extends ReactiveMongoRepository<Order, String> {
 }

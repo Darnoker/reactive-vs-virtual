@@ -1,4 +1,4 @@
-package pl.edu.ug.kglab.ReactiveTestApp.model.product;
+package pl.edu.ug.kglab.ReactiveTestApp.product.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;

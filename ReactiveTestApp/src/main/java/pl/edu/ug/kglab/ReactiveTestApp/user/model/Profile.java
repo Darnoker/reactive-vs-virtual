@@ -1,4 +1,4 @@
-package pl.edu.ug.kglab.ReactiveTestApp.model.user;
+package pl.edu.ug.kglab.ReactiveTestApp.user.model;
 
 import lombok.Data;
 

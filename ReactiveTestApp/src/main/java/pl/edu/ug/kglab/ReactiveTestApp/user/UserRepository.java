@@ -1,8 +1,8 @@
-package pl.edu.ug.kglab.ReactiveTestApp.repository;
+package pl.edu.ug.kglab.ReactiveTestApp.user;
 
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
-import pl.edu.ug.kglab.ReactiveTestApp.model.user.User;
+import pl.edu.ug.kglab.ReactiveTestApp.user.model.User;
 import reactor.core.publisher.Flux;
 
 @Repository
