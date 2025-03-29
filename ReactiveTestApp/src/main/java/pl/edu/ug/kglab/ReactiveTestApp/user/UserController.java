@@ -1,13 +1,10 @@
-package pl.edu.ug.kglab.ReactiveTestApp.controller;
+package pl.edu.ug.kglab.ReactiveTestApp.user;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.ug.kglab.ReactiveTestApp.model.user.User;
-import pl.edu.ug.kglab.ReactiveTestApp.repository.UserRepository;
-import pl.edu.ug.kglab.ReactiveTestApp.service.UserService;
+import pl.edu.ug.kglab.ReactiveTestApp.user.model.User;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;

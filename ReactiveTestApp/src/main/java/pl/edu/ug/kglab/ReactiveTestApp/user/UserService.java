@@ -1,14 +1,11 @@
-package pl.edu.ug.kglab.ReactiveTestApp.service;
+package pl.edu.ug.kglab.ReactiveTestApp.user;
 
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-import pl.edu.ug.kglab.ReactiveTestApp.model.user.User;
-import pl.edu.ug.kglab.ReactiveTestApp.repository.UserRepository;
+import pl.edu.ug.kglab.ReactiveTestApp.user.model.User;
 import reactor.core.publisher.Flux;
 
 @Service
