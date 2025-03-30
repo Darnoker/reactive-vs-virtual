@@ -7,18 +7,30 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import pl.edu.ug.kglab.ReactiveTestApp.user.model.User;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
+    private final UserRepository userRepository;
 
     private final ReactiveMongoTemplate mongoTemplate;
 
-    public UserService(ReactiveMongoTemplate mongoTemplate) {
+    public UserService(UserRepository userRepository, ReactiveMongoTemplate mongoTemplate) {
+        this.userRepository = userRepository;
         this.mongoTemplate = mongoTemplate;
     }
+
+    public Mono<User> getUser(String userId) {
+        return userRepository.findById(userId);
+    }
+
+    public Mono<Boolean> doesUserExists(String id) {
+        return userRepository.existsById(id);
+    }
+
 
     public Flux<User> getAllUsers() {
         Query query = new Query();
