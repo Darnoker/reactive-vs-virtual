@@ -1,10 +1,8 @@
 package pl.edu.ug.kglab.ReactiveTestApp.order;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pl.edu.ug.kglab.ReactiveTestApp.order.model.Order;
 import pl.edu.ug.kglab.ReactiveTestApp.product.model.Product;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -25,6 +23,11 @@ public class OrderController {
     @GetMapping("/products/{orderId}")
     public Mono<List<Product>> getProductsForOrder(@PathVariable String orderId) {
         return orderService.getListOfProductsForOrder(orderId);
+    }
+
+    @GetMapping("/user/{userId}")
+    public Flux<Order>  getAllOrdersOfUser(@PathVariable String userId) {
+        return orderService.getAllOrdersForUser(userId);
     }
 
     @GetMapping("/ids/{limit}")

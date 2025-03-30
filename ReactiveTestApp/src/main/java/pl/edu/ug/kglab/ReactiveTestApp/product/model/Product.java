@@ -1,6 +1,8 @@
 package pl.edu.ug.kglab.ReactiveTestApp.product.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,6 +11,8 @@ import java.util.List;
 
 @Data
 @Document(collection = "products")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
     @Id
@@ -26,4 +30,13 @@ public class Product {
 
     private List<Review> reviews;
 
+    public Product(Product other) {
+        this.id = other.id;
+        this.name = other.name;
+        this.description = other.description;
+        this.price = other.price;
+        this.category = other.category;
+        this.tags = other.tags;
+        this.reviews = other.reviews;
+    }
 }
