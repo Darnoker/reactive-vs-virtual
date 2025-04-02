@@ -1,7 +1,6 @@
 package pl.edu.ug.kglab.ReactiveTestApp.orderInfo;
 
 import org.springframework.web.bind.annotation.*;
-import pl.edu.ug.kglab.ReactiveTestApp.order.CreateOrderRequest;
 import pl.edu.ug.kglab.ReactiveTestApp.order.model.Order;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

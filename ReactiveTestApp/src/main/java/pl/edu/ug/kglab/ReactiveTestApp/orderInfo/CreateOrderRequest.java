@@ -1,4 +1,4 @@
-package pl.edu.ug.kglab.ReactiveTestApp.order;
+package pl.edu.ug.kglab.ReactiveTestApp.orderInfo;
 
 import pl.edu.ug.kglab.ReactiveTestApp.order.model.ProductOrder;
 

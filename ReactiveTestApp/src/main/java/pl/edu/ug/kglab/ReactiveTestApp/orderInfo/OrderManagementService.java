@@ -1,11 +1,9 @@
 package pl.edu.ug.kglab.ReactiveTestApp.orderInfo;
 
 import org.springframework.stereotype.Service;
-import pl.edu.ug.kglab.ReactiveTestApp.order.CreateOrderRequest;
 import pl.edu.ug.kglab.ReactiveTestApp.order.OrderService;
 import pl.edu.ug.kglab.ReactiveTestApp.order.model.Order;
 import pl.edu.ug.kglab.ReactiveTestApp.order.model.Payment;
-import pl.edu.ug.kglab.ReactiveTestApp.order.model.ProductOrder;
 import pl.edu.ug.kglab.ReactiveTestApp.order.model.Shipping;
 import pl.edu.ug.kglab.ReactiveTestApp.product.ProductService;
 import pl.edu.ug.kglab.ReactiveTestApp.product.model.Product;
