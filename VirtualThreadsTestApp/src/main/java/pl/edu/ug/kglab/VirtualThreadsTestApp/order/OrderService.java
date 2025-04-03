@@ -2,6 +2,7 @@ package pl.edu.ug.kglab.VirtualThreadsTestApp.order;
 
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.edu.ug.kglab.VirtualThreadsTestApp.order.model.Order;
 import pl.edu.ug.kglab.VirtualThreadsTestApp.product.ProductRepository;
@@ -60,8 +61,7 @@ public class OrderService {
 
     public List<String> getFirstOrderIds(int limit) {
         log.info("Pobieranie {} pierwszych id orderow...", limit);
-        return orderRepository.findAll().stream()
-                .limit(limit)
+        return orderRepository.findAll(PageRequest.of(0, limit)).stream()
                 .map(Order::getId)
                 .toList();
     }

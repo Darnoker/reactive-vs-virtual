@@ -1,9 +1,7 @@
 package pl.edu.ug.kglab.ReactiveTestApp.product;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.TransactionManagementConfigurationSelector;
 import org.springframework.transaction.reactive.TransactionalOperator;
-import pl.edu.ug.kglab.ReactiveTestApp.common.RollbackException;
 import pl.edu.ug.kglab.ReactiveTestApp.product.dto.CreateReviewRequestBody;
 import pl.edu.ug.kglab.ReactiveTestApp.product.model.Product;
 import pl.edu.ug.kglab.ReactiveTestApp.product.model.Review;
