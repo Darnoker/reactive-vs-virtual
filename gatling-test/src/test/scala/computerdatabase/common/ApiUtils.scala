@@ -22,7 +22,6 @@ object ApiUtils {
       s"""{"productId": "$pid", "quantity": $quantity, "details": {"color" : "$detailColor", "warranty" : "$detailWarranty"}}"""
     }.mkString(", ")
 
-    // Losowo ustalamy pozostałe dane zamówienia
     val total = BigDecimal(Random.nextDouble() * 100).setScale(2, BigDecimal.RoundingMode.HALF_UP).toDouble
     val street = "Street " + (Random.nextInt(100) + 1)
     val city = "City" + (Random.nextInt(50) + 1)
@@ -31,7 +30,6 @@ object ApiUtils {
     val shippingMethod = if (Random.nextBoolean()) "Standard" else "Express"
     val paymentMethod = if (Random.nextBoolean()) "CreditCard" else "PayPal"
 
-    // Budujemy finalny JSON
     s"""{
        |  "userId": "$userId",
        |  "products": [ $productsJson ],
