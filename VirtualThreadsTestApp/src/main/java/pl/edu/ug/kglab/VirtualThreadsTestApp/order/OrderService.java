@@ -30,9 +30,9 @@ public class OrderService {
     }
 
     public List<Product> getListOfProductsForOrder(String orderId) {
-        return orderRepository.findById(orderId).stream()
-                .flatMap(order -> mapToProductsList(order).stream())
-                .toList();
+        return orderRepository.findById(orderId)
+                .map(this::mapToProductsList)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found with id: " + orderId));
     }
 
     public Order addNewOrder(Order order) {
