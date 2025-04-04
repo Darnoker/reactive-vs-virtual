@@ -40,6 +40,7 @@ public class OrderService {
 
     public Mono<List<Product>> getListOfProductsForOrder(String orderId) {
         return orderRepository.findById(orderId)
+                .switchIfEmpty(Mono.error(new IllegalArgumentException("Order not found with id: " + orderId)))
                 .flatMap(this::mapToProductsList);
     }
 

@@ -1,5 +1,6 @@
 package pl.edu.ug.kglab.VirtualThreadsTestApp.product;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.edu.ug.kglab.VirtualThreadsTestApp.product.dto.CreateReviewRequestBody;
 import pl.edu.ug.kglab.VirtualThreadsTestApp.product.model.Product;
@@ -49,5 +50,11 @@ public class ProductService {
         product.setReviews(newReviews);
 
         return product;
+    }
+
+    public List<String> getFirstProducts(Integer limit) {
+        return productRepository.findAll(PageRequest.of(0, limit)).stream()
+                .map(Product::getId)
+                .toList();
     }
 }
