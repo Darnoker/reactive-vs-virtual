@@ -1,12 +1,10 @@
 package pl.edu.ug.kglab.VirtualThreadsTestApp.product;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.edu.ug.kglab.VirtualThreadsTestApp.product.dto.CreateReviewRequestBody;
 import pl.edu.ug.kglab.VirtualThreadsTestApp.product.model.Review;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -23,5 +21,10 @@ public class ProductController {
     @PostMapping("/add-review")
     public CompletableFuture<Review> addReview(@RequestBody CreateReviewRequestBody reviewRequestBody) {
         return CompletableFuture.supplyAsync(() -> productService.createReview(reviewRequestBody));
+    }
+
+    @GetMapping("/list/{limit}")
+    public CompletableFuture<List<String>> getFirstProducts(@PathVariable Integer limit) {
+        return CompletableFuture.supplyAsync(() -> productService.getFirstProducts(limit));
     }
 }

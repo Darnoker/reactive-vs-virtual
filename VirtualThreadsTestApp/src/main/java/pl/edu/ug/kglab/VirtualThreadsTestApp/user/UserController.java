@@ -24,4 +24,14 @@ public class UserController {
     public CompletableFuture<List<User>> findUsersByLastname(@PathVariable String lastname) {
         return CompletableFuture.supplyAsync(() -> userService.findUsersByLastname(lastname));
     }
+
+    @GetMapping("lastname/list/{limit}")
+    public CompletableFuture<List<String>> getFirstUserLastnames(@PathVariable Integer limit) {
+        return CompletableFuture.supplyAsync(() -> userService.listFirstLastnames(limit));
+    }
+
+    @GetMapping("/list/{limit}")
+    public CompletableFuture<List<String>> getFirstUsersIds(@PathVariable Integer limit) {
+        return CompletableFuture.supplyAsync(() -> userService.listFirstIds(limit));
+    }
 }
