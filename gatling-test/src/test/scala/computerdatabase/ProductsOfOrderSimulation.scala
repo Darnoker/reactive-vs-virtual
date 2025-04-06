@@ -3,12 +3,12 @@ package computerdatabase
 import computerdatabase.common.{ApiEndpoints, HttpProtocol}
 import io.gatling.core.Predef._
 
-class OrderProductsSimulation extends Simulation {
+class ProductsOfOrderSimulation extends Simulation {
 
   val orderFeeder = csv("data/orderIds.csv").circular
 
-  val scn = scenario("Order Products Request")
-    .feed(orderFeeder).exec(ApiEndpoints.orderProducts)
+  val scn = scenario("Get products for order - GET /orders/products/{orderId}")
+    .feed(orderFeeder).exec(ApiEndpoints.productsForOrder)
 
   setUp(
     scn.inject(

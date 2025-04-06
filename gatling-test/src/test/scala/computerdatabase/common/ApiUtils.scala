@@ -7,13 +7,12 @@ object ApiUtils {
   def generateCreateReviewBody(productId: String): String = {
     val reviewer = "Reviewer" + scala.util.Random.nextInt(1000)
     val rating = Random.nextInt(5) + 1
-    val comment = "comment " + scala.util.Random.alphanumeric.take(15).mkString
+    val comment = Random.alphanumeric.take(1000).mkString
 
     s"""{"productId": "$productId", "reviewer": "$reviewer", "rating": $rating, "comment": "$comment"}"""
   }
 
   def generateCreateOrderBody(userId: String, productIds: Seq[String]): String = {
-    println(s"LENGTH OF PRODUCTS LIST: ${productIds.length}")
     val productsJson = productIds.map { pid =>
       val quantity = Random.nextInt(5) + 1
       val detailColor = Random.alphanumeric.take(1000).mkString

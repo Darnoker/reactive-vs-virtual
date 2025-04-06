@@ -5,19 +5,19 @@ import io.gatling.http.Predef._
 
 object ApiEndpoints {
 
-  val orderProducts = http("Order products")
+  val productsForOrder = http("Get products for order - GET /orders/products/{orderId}")
     .get(session => s"/orders/products/${session("orderId").as[String]}")
     .check(status.is(200))
 
-  val searchByLastname = http("User by lastname")
+  val searchByLastname = http("Get users by lastname - GET users/lastname/{lastname}")
     .get(session => s"/users/lastname/${session("lastname").as[String]}")
     .check(status.is(200))
 
-  val orderInfo = http("Order info")
+  val orderInfo = http("Get order information about user and products - GET order/manage/{orderId}")
     .get(session => s"/order/manage/${session("orderId").as[String]}")
     .check(status.is(200))
 
-  val createReview = http("Create Review")
+  val createReview = http("Create review - POST /products/add-review")
     .post("/products/add-review")
     .body(StringBody(session => {
       val productId = session("productId").as[String]

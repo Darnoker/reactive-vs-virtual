@@ -7,13 +7,13 @@ class LastnamesSimulation extends Simulation {
 
   val lastnamesFeeder = csv("data/lastnames.csv").circular
 
-  val scn = scenario("Users lastnames requests")
+  val scn = scenario("Get users by lastname - GET users/lastname/{lastname}")
     .feed(lastnamesFeeder)
     .exec(ApiEndpoints.searchByLastname)
 
   setUp(
     scn.inject(
-      rampUsers(1000)
+      rampUsers(2500)
         .during(180)
     )
   ).protocols(HttpProtocol.protocol)

@@ -7,14 +7,14 @@ class CreateReviewSimulation extends Simulation {
 
   val productsIdsFeeder = csv("data/productsIds.csv").circular
 
-  val scn = scenario("Create review requests")
+  val scn = scenario("Create review - POST /products/add-review")
     .feed(productsIdsFeeder)
     .exec(ApiEndpoints.createReview)
 
   setUp(
     scn.inject(
-      rampUsers(10000)
-        .during(120)
+      rampUsers(25000)
+        .during(180)
     )
   ).protocols(HttpProtocol.protocol)
 }

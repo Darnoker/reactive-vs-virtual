@@ -9,18 +9,17 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserRepository userRepository;
 
     private final UserService userService;
 
-    public UserController(UserRepository userRepository, UserService userService) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -34,12 +33,12 @@ public class UserController {
     }
 
     @GetMapping("/lastname/{lastname}")
-    public Flux<User> getUsersByLastname(@PathVariable String lastname) {
-        return userRepository.findByLastname(lastname);
+    public Mono<List<User>> getUsersByLastname(@PathVariable String lastname) {
+        return userService.findByLastname(lastname);
     }
 
     @GetMapping("/{id}")
     public Mono<User> getUserById(@PathVariable String id) {
-        return userRepository.findById(id);
+        return userService.getUser(id);
     }
 }
