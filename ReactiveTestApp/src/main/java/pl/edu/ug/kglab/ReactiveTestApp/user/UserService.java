@@ -9,6 +9,8 @@ import pl.edu.ug.kglab.ReactiveTestApp.user.model.User;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -40,5 +42,11 @@ public class UserService {
                 .doOnComplete(() -> logger.info("Zakończono pobieranie użytkowników"))
                 .doOnError(error -> logger.error("Błąd podczas pobierania użytkowników", error));
     }
+
+    public Mono<List<User>> findByLastname(String lastname) {
+        return userRepository.findByLastname(lastname)
+                .collectList();
+    }
+
 }
 

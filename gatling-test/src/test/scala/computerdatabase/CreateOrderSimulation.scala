@@ -2,31 +2,32 @@ package computerdatabase
 import computerdatabase.common.{ApiEndpoints, HttpProtocol}
 import io.gatling.core.Predef._
 
+import scala.util.Random
+
 class CreateOrderSimulation extends Simulation {
 
   val userIds = csv("data/userIds.csv").circular
 
   val productsIdsFeeder = csv("data/productsIds.csv").circular
 
-  val scn = scenario("Create order with multiple productIds")
+  val scn = scenario("Create order - POST /order/manage/add")
     .feed(userIds)
-    .exec(session => session.set("repeatCount", 200))
+    .exec(session => session.set("repeatCount", 50))
     .exec(session => session.set("productIds", Seq.empty[String]))
     .repeat(session => session("repeatCount").as[Int], "counter") {
       feed(productsIdsFeeder)
         .exec(session => {
-          val currentList = session("productIds").as[Seq[String]]
+          val currentProductIds = session("productIds").as[Seq[String]]
           val newProductId = session("productId").as[String]
-          session.set("productIds", currentList :+ newProductId)
+          session.set("productIds", currentProductIds :+ newProductId)
         })
     }
-    .exec(ApiEndpoints.createReview)
+    .exec(ApiEndpoints.createOrder)
 
   setUp(
     scn.inject(
-      rampUsers(20000)
-        .during(180)
+      rampUsers(15000)
+          .during(180)
     )
   ).protocols(HttpProtocol.protocol)
-
 }
