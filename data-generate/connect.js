@@ -1,9 +1,8 @@
 const { MongoClient } = require('mongodb');
 const { generateFakeUser, generateFakeProduct, generateFakeOrder } = require('./data-generate');
-require('dotenv').config();
 
-const username = process.env.MONGO_INITDB_ROOT_USERNAME;
-const password = process.env.MONGO_INITDB_ROOT_PASSWORD;
+const username = 'root';
+const password = 'example';
 const uri = `mongodb://${username}:${password}@localhost:27017/testDB?authSource=admin`;
 
 async function clearDatabase(db) {
