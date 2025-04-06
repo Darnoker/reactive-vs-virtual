@@ -46,7 +46,7 @@ The project's aim is to compare both approaches in terms of:
 
 - Java 21 (required for virtual threads)
 - Maven 3.8+
-- Spring Boot 3.2+
+- Spring Boot 3.4.3
 - Node.js and npm (for the data generator)
 - sbt (for running Gatling tests)
 
