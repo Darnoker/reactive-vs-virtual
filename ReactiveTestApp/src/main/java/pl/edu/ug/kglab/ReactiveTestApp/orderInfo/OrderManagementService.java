@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import pl.edu.ug.kglab.ReactiveTestApp.order.OrderService;
 import pl.edu.ug.kglab.ReactiveTestApp.order.model.Order;
 import pl.edu.ug.kglab.ReactiveTestApp.order.model.Payment;
+import pl.edu.ug.kglab.ReactiveTestApp.order.model.ProductOrder;
 import pl.edu.ug.kglab.ReactiveTestApp.order.model.Shipping;
 import pl.edu.ug.kglab.ReactiveTestApp.product.ProductService;
 import pl.edu.ug.kglab.ReactiveTestApp.product.model.Product;
@@ -14,6 +15,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadMXBean;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -38,12 +41,10 @@ public class OrderManagementService {
 
     public Mono<Order> addNewOrder(CreateOrderRequest createOrderRequest) {
         Mono<Boolean> userExists = userService.doesUserExists(createOrderRequest.userId());
-        List<Mono<Boolean>> productsExistence = createOrderRequest.products().stream()
-                .map(product -> productService.doesProductExists(product.getProductId()))
-                .collect(Collectors.toList());
-
-        Mono<Boolean> allProductsExist = Mono.zip(productsExistence, results -> Arrays.stream(results)
-                .allMatch(result -> (Boolean) result));
+        Mono<Boolean> allProductsExist = Flux.fromIterable(createOrderRequest.products())
+                .map(ProductOrder::getProductId)
+                .flatMap(productService::doesProductExists)
+                .all(Boolean::booleanValue);
 
         return userExists
                 .zipWith(allProductsExist)
@@ -65,7 +66,6 @@ public class OrderManagementService {
                     order.setPayment(buildPayment(createOrderRequest));
                     order.setTotal(BigDecimal.valueOf(createOrderRequest.total()));
                     order.setOrderDate(LocalDate.now());
-
                     return orderService.addNewOrder(order)
                             .flatMap(orderService::deleteOrder)
                             .thenReturn(order);
