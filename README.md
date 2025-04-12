@@ -24,13 +24,13 @@ Each of these resources supports basic CRUD operations.
 
 ## Main Differences
 
-| Feature                   | ReactiveTestApp                         | VirtualThreadsTestApp                  |
+| Feature                   | ReactiveTestApp                          | VirtualThreadsTestApp                   |
 |---------------------------|------------------------------------------|----------------------------------------|
 | Technology                | Spring WebFlux                           | Spring Web MVC + Virtual Threads       |
 | Concurrency Model         | Reactive Streams + Netty                 | Classic threading with virtual threads |
 | HTTP Server               | Netty                                    | Tomcat                                 |
 | Programming Style         | Declarative, reactive                    | Imperative, classical                  |
-| Performance under Load    | Very good (non-blocking I/O)             | Very good (lightweight threads)        |
+| Key Characteristic        | non-blocking I/O                         | lightweight threads                    |
 
 ## Project Goal
 
@@ -46,7 +46,7 @@ The project's aim is to compare both approaches in terms of:
 
 - Java 21 (required for virtual threads)
 - Maven 3.8+
-- Spring Boot 3.2+
+- Spring Boot 3.4.3
 - Node.js and npm (for the data generator)
 - sbt (for running Gatling tests)
 
