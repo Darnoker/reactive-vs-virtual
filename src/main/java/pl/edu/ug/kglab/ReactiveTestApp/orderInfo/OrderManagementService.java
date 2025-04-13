@@ -1,5 +1,6 @@
 package pl.edu.ug.kglab.ReactiveTestApp.orderInfo;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.edu.ug.kglab.ReactiveTestApp.order.OrderService;
 import pl.edu.ug.kglab.ReactiveTestApp.order.model.Order;
@@ -25,6 +26,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class OrderManagementService {
 
     private final OrderService orderService;
@@ -40,11 +42,13 @@ public class OrderManagementService {
     }
 
     public Mono<Order> addNewOrder(CreateOrderRequest createOrderRequest) {
+        log.info("Starting adding new order ...");
         Mono<Boolean> userExists = userService.doesUserExists(createOrderRequest.userId());
         Mono<Boolean> allProductsExist = Flux.fromIterable(createOrderRequest.products())
                 .map(ProductOrder::getProductId)
                 .flatMap(productService::doesProductExists)
                 .all(Boolean::booleanValue);
+
 
         return userExists
                 .zipWith(allProductsExist)
@@ -69,7 +73,13 @@ public class OrderManagementService {
                     return orderService.addNewOrder(order)
                             .flatMap(orderService::deleteOrder)
                             .thenReturn(order);
-                });
+                })
+                .doOnSuccess((order -> log.info("Successfully created order {}", order.getId())))
+                .doOnError((error) -> log.error("There was an error with creating new order {} ", error.getMessage()))
+                .doOnTerminate(() -> log.warn("Adding new order terminated."))
+                .doOnCancel(() -> log.warn("Adding new order cancelled."))
+                .doOnDiscard(Order.class, discarded -> log.warn("Adding new order discarded: {}", discarded));
+
     }
 
     public Flux<UserOrdersResponse> getUsersAndOrdersCount() {
