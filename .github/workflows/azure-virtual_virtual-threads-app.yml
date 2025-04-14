@@ -1,19 +1,20 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
-name: Build and deploy JAR app to Azure Web App - virtual-threads-app
+name: Build and deploy Spring Boot app to Azure Web App
 
 on:
   push:
     branches:
-      - Azure/virtual
+      - Azure/reactive
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+      MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+      MONGO_HOST: ${{ secrets.MONGO_HOST }}
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read # This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -25,13 +26,13 @@ jobs:
           distribution: 'microsoft'
 
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean package -DskipTests  # Zbuduj aplikację jako .jar
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/target/*.jar'  # Wybierz .jar zamiast .war
 
   deploy:
     runs-on: ubuntu-latest
@@ -40,21 +41,21 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
-  
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: java-app
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5054E5BBFFAA4050AC09C198ECB4D143 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_8B7869C92DF8433FAC437070FBA6C91C }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B7AB8819A98E4C16B93E9D4DB4F490DF }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_6E9979F792F2479EB98A4CA50640D9E2 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C99FC5F36FD64D058509D4DA2230180D }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BA8AC2625A6641D0A4D732AA8E16C064 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -62,5 +63,4 @@ jobs:
         with:
           app-name: 'virtual-threads-app'
           slot-name: 'Production'
-          package: '*.jar'
-          
+          package: '*.jar'  # Użyj .jar zamiast .war
