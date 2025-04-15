@@ -64,3 +64,5 @@ jobs:
           app-name: 'virtual-threads-app'
           slot-name: 'Production'
           package: '*.jar'  # Użyj .jar zamiast .war
+
+          
