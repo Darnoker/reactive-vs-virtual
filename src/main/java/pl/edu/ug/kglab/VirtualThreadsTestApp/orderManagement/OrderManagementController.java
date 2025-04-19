@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.edu.ug.kglab.VirtualThreadsTestApp.order.model.Order;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 @RestController
 @RequestMapping("/order/manage")
@@ -15,8 +16,11 @@ public class OrderManagementController {
 
     private final OrderManagementService orderManagementService;
 
-    public OrderManagementController(OrderManagementService orderManagementService) {
+    private final ExecutorService executorService;
+
+    public OrderManagementController(OrderManagementService orderManagementService, ExecutorService executorService) {
         this.orderManagementService = orderManagementService;
+        this.executorService = executorService;
     }
 
     @GetMapping("/{orderId}")
@@ -26,7 +30,7 @@ public class OrderManagementController {
 
     @PostMapping("/add")
     public CompletableFuture<ResponseEntity<Order>> addNewOrder(@RequestBody CreateOrderRequest createOrderRequest) {
-        return CompletableFuture.supplyAsync(() -> orderManagementService.addNewOrder(createOrderRequest))
+        return CompletableFuture.supplyAsync(() -> orderManagementService.addNewOrder(createOrderRequest), executorService)
                 .thenApply(ResponseEntity::ok)
                 .exceptionally(ex -> {
                     log.error("Wystąpił błąd podczas dodawania zamówienia", ex);
