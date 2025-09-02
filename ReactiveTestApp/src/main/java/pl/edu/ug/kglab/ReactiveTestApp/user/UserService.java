@@ -37,10 +37,10 @@ public class UserService {
     public Flux<User> getAllUsers() {
         Query query = new Query();
         return mongoTemplate.find(query, User.class)
-                .doOnSubscribe(subscription -> logger.info("Zapytanie do MongoDB rozpoczęte..."))
-                .doOnCancel(() -> logger.info("Zapytanie anulowane."))
-                .doOnComplete(() -> logger.info("Zakończono pobieranie użytkowników"))
-                .doOnError(error -> logger.error("Błąd podczas pobierania użytkowników", error));
+                .doOnSubscribe(subscription -> logger.info("Query to MongoDB..."))
+                .doOnCancel(() -> logger.info("Query cancelled."))
+                .doOnComplete(() -> logger.info("User download completed"))
+                .doOnError(error -> logger.error("Error when downloading users", error));
     }
 
     public Mono<List<User>> findByLastname(String lastname) {

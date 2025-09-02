@@ -60,7 +60,7 @@ public class OrderService {
     }
 
     public List<String> getFirstOrderIds(int limit) {
-        log.info("Pobieranie {} pierwszych id orderow...", limit);
+        log.info("Downloading {} first order ids...", limit);
         return orderRepository.findAll(PageRequest.of(0, limit)).stream()
                 .map(Order::getId)
                 .toList();

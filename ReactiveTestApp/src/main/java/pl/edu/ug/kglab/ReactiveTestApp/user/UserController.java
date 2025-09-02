@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicLong;
 @RequestMapping("/users")
 public class UserController {
 
-
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -29,7 +28,7 @@ public class UserController {
         return userService.getAllUsers()
                 .publishOn(Schedulers.boundedElastic())
                 .doOnNext(user -> counter.incrementAndGet())
-                .doOnComplete(() -> System.out.println("Liczba użytkowników: " + counter.get()));
+                .doOnComplete(() -> System.out.println("User count: " + counter.get()));
     }
 
     @GetMapping("/lastname/{lastname}")

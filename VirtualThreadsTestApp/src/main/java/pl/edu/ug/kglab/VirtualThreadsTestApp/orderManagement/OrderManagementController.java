@@ -28,9 +28,6 @@ public class OrderManagementController {
     public CompletableFuture<ResponseEntity<Order>> addNewOrder(@RequestBody CreateOrderRequest createOrderRequest) {
         return CompletableFuture.supplyAsync(() -> orderManagementService.addNewOrder(createOrderRequest))
                 .thenApply(ResponseEntity::ok)
-                .exceptionally(ex -> {
-                    log.error("Wystąpił błąd podczas dodawania zamówienia", ex);
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-                });
+                .exceptionally(ex -> ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 }

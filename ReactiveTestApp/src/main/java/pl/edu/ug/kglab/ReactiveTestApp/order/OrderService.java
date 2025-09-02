@@ -66,7 +66,7 @@ public class OrderService {
     }
 
     public Flux<String> getFirstOrderIds(int limit) {
-        log.info("Pobieranie {} pierwszych id orderow...", limit);
+        log.info("Downloading {} first order ids...", limit);
         return orderRepository.findAll()
                 .take(limit)
                 .map(order -> order.getId() + "\n");
